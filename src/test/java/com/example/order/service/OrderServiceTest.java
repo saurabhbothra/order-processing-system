@@ -1,5 +1,6 @@
 package test.java.com.example.order.service;
 
+import main.java.com.example.order.exception.InsufficientInventoryException;
 import main.java.com.example.order.model.Order;
 import main.java.com.example.order.model.OrderStatus;
 import main.java.com.example.order.model.Product;
@@ -13,6 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -70,6 +72,24 @@ public class OrderServiceTest {
 
         int remainingInventory = inventoryRepository.getQuantity("P200");
         assertEquals(0, remainingInventory);
+    }
+
+    @Test
+    public void testInventoryReduction_AfterOrder() throws InsufficientInventoryException {
+        InventoryRepository inventoryRepository = new InventoryRepository();
+        InventoryService inventoryService = new InventoryService(inventoryRepository);
+
+        Product product = new Product("P100", "Product 1", 100.0, 2);
+
+        // Check initial inventory
+        int initialQty = inventoryRepository.getQuantity("P100");
+        assertEquals(10, initialQty);
+
+        // Reduce inventory
+        inventoryService.checkAndReduceInventory(Collections.singletonList(product));
+
+        int afterQty = inventoryRepository.getQuantity("P100");
+        assertEquals(initialQty - 2, afterQty);
     }
 
     @Test
