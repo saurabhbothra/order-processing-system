@@ -14,18 +14,6 @@ public class InventoryService {
         this.inventoryRepository = inventoryRepository;
     }
 
-    public void checkAvailability(Product product) throws InsufficientInventoryException {
-        int availableQty = inventoryRepository.getQuantity(product.getProductId());
-        if (availableQty >= product.getQuantity()) {
-            return;
-        }
-        throw new InsufficientInventoryException("Insufficient inventory for product " + product.getProductId());
-    }
-
-    public void reduceInventory(Product product) {
-        inventoryRepository.reduceQuantity(product.getProductId(), product.getQuantity());
-    }
-
     public synchronized void checkAndReduceInventory(List<Product> products) throws InsufficientInventoryException {
         for (Product product : products) {
             int availableQty = inventoryRepository.getQuantity(product.getProductId());
