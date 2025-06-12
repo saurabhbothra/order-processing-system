@@ -42,7 +42,6 @@ public class OrderService {
             order.setStatus(OrderStatus.PROCESSING);
             orderRepository.saveOrder(order);
 
-            order.setStatus(OrderStatus.COMPLETED);
             return true;
         } catch (InsufficientInventoryException e) {
             order.setStatus(OrderStatus.CANCELLED);

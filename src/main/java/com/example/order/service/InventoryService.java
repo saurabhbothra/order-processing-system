@@ -21,9 +21,6 @@ public class InventoryService {
                 throw new InsufficientInventoryException("Insufficient inventory for product " + product.getProductId());
             }
         }
-        for (Product product : products) {
-            inventoryRepository.reduceQuantity(product.getProductId(), product.getQuantity());
-        }
     }
 
 }
