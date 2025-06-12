@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -90,6 +91,34 @@ public class OrderServiceTest {
 
         int afterQty = inventoryRepository.getQuantity("P100");
         assertEquals(initialQty - 2, afterQty);
+    }
+
+    @Test
+    public void testOrderStatusIsCompletedAfterSaving() {
+        // Arrange
+        Product product = new Product("P100", "Product 1", 100.0, 2);
+        Order order = new Order("O500", List.of(product));
+
+        OrderRepository orderRepository = new OrderRepository();
+        InventoryRepository inventoryRepository = new InventoryRepository();
+        InventoryService inventoryService = new InventoryService(inventoryRepository);
+        DiscountCalculator discountCalculator = new DiscountCalculator();
+        PaymentService paymentService = new PaymentService();
+
+        OrderService orderService = new OrderService(orderRepository, inventoryService, discountCalculator, paymentService);
+
+        // Act
+        boolean result = orderService.placeOrder(order);
+
+        // Assert
+        assertTrue(result, "Order placement should succeed");
+
+        // Retrieve the saved order from repository
+        Order savedOrder = orderRepository.findOrderById(order.getOrderId());
+        assertNotNull(savedOrder, "Saved order should not be null");
+
+        // Verify order status is COMPLETED
+        assertEquals(OrderStatus.COMPLETED, savedOrder.getStatus(), "Order status should be COMPLETED after saving");
     }
 
     @Test
