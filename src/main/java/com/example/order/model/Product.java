@@ -1,9 +1,9 @@
 package main.java.com.example.order.model;
 
 public class Product {
-    private String productId;
-    private String name;
-    private double price;
+    private final String productId;
+    private final String name;
+    private final double price;
     private int quantity;
 
     public Product(String productId, String name, double price, int quantity) {
