@@ -47,7 +47,6 @@ public class OrderServiceTest {
         double expectedTotal = 100 * 6 + 75 * 4;
         assertEquals(expectedTotal, order.getTotalPrice(), 0.01);
 
-        // Discount fixed: 10% of (price * quantity) for products with quantity > 5
         double expectedDiscount = 100 * 6 * 0.1; // Only p1 qualifies
         assertEquals(expectedDiscount, order.getDiscount(), 0.01);
 

@@ -8,10 +8,10 @@ import main.java.com.example.order.util.DiscountCalculator;
 
 public class OrderService {
 
-    private OrderRepository orderRepository;
-    private InventoryService inventoryService;
-    private DiscountCalculator discountCalculator;
-    private PaymentService paymentService;
+    private final OrderRepository orderRepository;
+    private final InventoryService inventoryService;
+    private final DiscountCalculator discountCalculator;
+    private final PaymentService paymentService;
 
     public OrderService(OrderRepository orderRepository, InventoryService inventoryService,
                         DiscountCalculator discountCalculator, PaymentService paymentService) {

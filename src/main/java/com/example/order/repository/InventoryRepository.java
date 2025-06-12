@@ -3,7 +3,7 @@ package main.java.com.example.order.repository;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class InventoryRepository {
-    private ConcurrentHashMap<String, Integer> inventory = new ConcurrentHashMap<>();
+    private final ConcurrentHashMap<String, Integer> inventory = new ConcurrentHashMap<>();
 
     public InventoryRepository() {
         inventory.put("P100", 10);

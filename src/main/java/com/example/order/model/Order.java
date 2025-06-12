@@ -3,8 +3,8 @@ package main.java.com.example.order.model;
 import java.util.List;
 
 public class Order {
-    private String orderId;
-    private List<Product> products;
+    private final String orderId;
+    private final List<Product> products;
     private double totalPrice;
     private double discount;
     private OrderStatus status;
